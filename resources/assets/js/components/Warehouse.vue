@@ -126,7 +126,7 @@ export default {
       errors: [],
       toPull: [],
       items: [],
-      columns: [ 'pull', 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions' ],
+      columns: [ 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions' ],
       item: {
         shelf: '',
         code: '',
