@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('title')
-  Living Rooms Warehouse Inventory - Welcome
+  Page Not Found
 @endsection
 
 @section('content')
   <section class="section">
     <div class="container">
-      Please <a href="{{ url('login') }}">log in</a> to continue
+      <h1>Page Not Found</h1>
+
     </div>
   </section>
 @endsection

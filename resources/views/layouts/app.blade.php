@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="{{ elixir('css/app.css')}}">
 
     <!-- Scripts -->
-    <!--<script>
+    <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
-    </script>-->
+    </script>
 </head>
 <body>
     <div id="app">
@@ -62,6 +62,16 @@
 
         @yield('content')
     </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            LRWH by AEG
+          </p>
+        </div>
+      </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="{{ elixir('/js/app.js') }}"></script>
