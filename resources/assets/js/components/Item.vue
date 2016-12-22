@@ -1,6 +1,8 @@
 <template lang="html">
   <tr>
-
+    <td width="5%">
+      <input class="checkbox" type="checkbox" v-model="pull" v-on:change="pullItem"/>
+    </td>
     <td width="10%">
       <input type="text" class="input" v-model="editForm.shelf" v-if="edit" />
       <template v-else>{{ item.shelf }}</template>
@@ -9,7 +11,7 @@
       <input type="text" class="input" v-model="editForm.code" v-if="edit" />
       <template v-else>{{ item.code }}</template>
     </td>
-    <td width="25%">
+    <td width="20%">
       <input type="text" class="input" v-model="editForm.description" v-if="edit" />
       <template v-else>{{ item.description }}</template>
     </td>
@@ -60,6 +62,7 @@ export default {
 
   data() {
     return {
+      pull: false,
       edit: false,
       editForm: {
         shelf: '',
@@ -104,6 +107,9 @@ export default {
       });
     },
 
+    pullItem() {
+      this.$emit('pull-item', this.item.code, this.pull);
+    }
   }
 }
 </script>

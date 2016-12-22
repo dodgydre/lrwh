@@ -88,7 +88,7 @@
             <tr>
               <th v-for="column in columns">
 
-                <a v-if="column != 'actions'" href="#" @click="sortBy(column)" class="button is-link" v-bind:class="{ 'is-primary': sortKey == column }">
+                <a v-if="column != 'actions' && column != 'pull'" href="#" @click="sortBy(column)" class="button is-link" v-bind:class="{ 'is-primary': sortKey == column }">
                   {{ column }}
                 </a>
                 <a class="button is-link is-disabled" v-else>{{ column }}</a>
@@ -101,6 +101,7 @@
               v-bind:item="item"
               v-on:delete-item="deleteItem"
               v-on:update-item="fetchItems"
+              v-on:pull-item="pullItems"
             >
             </Items>
 
@@ -125,7 +126,7 @@ export default {
       errors: [],
       toPull: [],
       items: [],
-      columns: [ 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions' ],
+      columns: [ 'pull', 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions' ],
       item: {
         shelf: '',
         code: '',
@@ -172,6 +173,16 @@ export default {
         this.items.splice(index, 1);
         console.log(response.data);
       });
+    },
+
+    pullItems(code, pull) {
+      if ( pull ) {
+        this.toPull.push(code);
+        console.log(this.toPull);
+      } else {
+        this.toPull.splice(this.toPull.indexOf(code),1);
+        console.log(this.toPull);
+      }
     },
 
     sortBy(column) {
