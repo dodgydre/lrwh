@@ -147,6 +147,10 @@ export default {
     fetchItems() {
       axios.get('api/items').then(response => {
         this.items = response.data.items;
+        for (var i = 0; i < this.items.length; i ++) {
+          this.items[i].quantity = Number(this.items[i].quantity);
+        }
+
       }, response => {
         console.log(response);
       });
