@@ -17,7 +17,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+// Item resource routes.  Not currently set to be authenticated...
 Route::resource('items', 'ItemController');
+
 /*
 Route::get('items', function () {
   return App\Item::orderBy('code', 'desc')->get();

@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('title')
-  Living Rooms Warehouse Inventory - Welcome
+  Living Rooms Warehouse Inventory
+@endsection
+@section('subtitle')
+  Welcome
 @endsection
 
 @section('content')
