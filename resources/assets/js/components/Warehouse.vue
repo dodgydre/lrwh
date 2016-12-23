@@ -59,7 +59,6 @@
                   <td>
                     <button class="button is-primary is-small">Create New</button>
                   </td>
-
                 </tr>
               </tbody>
             </table>
@@ -83,12 +82,12 @@
 
       </div>
       <div class="card-content">
-        <table class="table is-striped">
+        <table class="table is-striped is-bordered">
           <thead>
             <tr>
               <th v-for="column in columns">
 
-                <a v-if="column != 'actions' && column != 'pull'" href="#" @click="sortBy(column)" class="button is-link" v-bind:class="{ 'is-primary': sortKey == column }">
+                <a v-if="column != 'actions' && column != 'pull' && column != 'updated'" href="#" @click="sortBy(column)" class="button is-link" v-bind:class="{ 'is-primary': sortKey == column }">
                   {{ column }}
                 </a>
                 <a class="button is-link is-disabled" v-else>{{ column }}</a>
@@ -126,7 +125,7 @@ export default {
       errors: [],
       toPull: [],
       items: [],
-      columns: [ 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions' ],
+      columns: [ 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions', 'updated' ],
       item: {
         shelf: '',
         code: '',
@@ -238,5 +237,9 @@ export default {
     padding-bottom: 10px;
     padding-top: 10px;
     text-align: right;
+  }
+
+  th {
+    font-size: smaller;
   }
 </style>

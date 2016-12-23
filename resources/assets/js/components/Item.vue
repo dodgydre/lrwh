@@ -1,6 +1,6 @@
 <template lang="html">
   <tr>
-    <td width="10%">
+    <td width="8%">
       <input type="text" class="input" v-model="editForm.shelf" v-if="edit" />
       <template v-else>{{ item.shelf }}</template>
     </td>
@@ -16,7 +16,7 @@
       <input type="text" class="input" v-model="editForm.colour" v-if="edit" />
       <template v-else>{{ item.colour }}</template>
     </td>
-    <td width="10%">
+    <td width="5%" class="has-text-centered">
       <input type="text" class="input" v-model="editForm.quantity" v-if="edit" />
       <template v-else>{{ item.quantity }}</template>
     </td>
@@ -49,6 +49,10 @@
           <i class="fa fa-trash"></i>
         </span><span>Delete</span>
       </a>
+    </td>
+    <td width="13%">
+      <template v-if="item.updated_at != null">{{ moment(item.updated_at, "YYYY-MM-DD hh:mm:ss").format("ll") }}</template>
+      <template v-else>-</template>
     </td>
   </tr>
 </template>
@@ -111,5 +115,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+td {
+  font-size: smaller;
+}
 </style>

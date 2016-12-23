@@ -26,13 +26,13 @@
         <div class="hero-head">
           <nav class="nav">
             <div class="nav-left">
-              <a class="nav-item is-brand" href="#">LRWH</a>
+              <a class="nav-item is-brand" href="/">LRWH</a>
             </div>
             <div class="nav-right">
 
               @if (Auth::guest())
                 <a class="nav-item" href="{{ url('/login') }}">Login</a></li>
-                <a class="nav-item" href="{{ url('/register') }}">Register</a></li>
+                <a class="nav-item is-disabled" href="{{ url('/register') }}">Register</a></li>
               @else
                 <span class="nav-item">{{ Auth::user()->name }}</span>
                 <a class="nav-item" href="{{ url('/logout') }}"
