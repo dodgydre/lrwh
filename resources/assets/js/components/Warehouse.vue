@@ -200,7 +200,7 @@ export default {
     sorted() {
       var self = this;
       var filtered = self.items.filter(function(item) {
-        var searchRegex = new RegExp(self.search, 'i');
+        var searchRegex = new RegExp('^' + self.search, 'i');
         return (searchRegex.test(item.description) ||
                 searchRegex.test(item.code) ||
                 searchRegex.test(item.make) ||
