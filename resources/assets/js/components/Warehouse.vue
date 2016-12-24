@@ -145,33 +145,33 @@ export default {
 
   methods: {
     fetchItems() {
-      axios.get('api/items').then(response => {
-        this.items = response.data.items;
-        for (var i = 0; i < this.items.length; i ++) {
-          this.items[i].quantity = Number(this.items[i].quantity);
-        }
-
-      }, response => {
-        console.log(response);
-      });
+      axios.get('api/items')
+        .then(response => {
+          this.items = response.data.items;
+          for (let i = 0; i < this.items.length; i ++) {
+            this.items[i].quantity = Number(this.items[i].quantity);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
 
     createItem() {
-      axios.post('api/items/', this.item).then(response => {
-        this.items.push(response.data.item);
-        this.item = { shelf: '', code: '', colour: '', description: '', quantity: '', make: '', group: '', selected: false };
-        if(this.errors) {
-          this.errors = [];
-        }
-        console.log(response.data);
-      }, response => {
-        this.errors = response.data;
-      });
-
+      axios.post('/api/items/', this.item)
+        .then(response => {
+          this.items.push(response.data.item);
+          this.item = { shelf: '', code: '', colour: '', description: '', quantity: '', make: '', group: '', selected: false };
+          if(this.errors) {
+            this.errors = [];
+          }
+          console.log(response.data);
+        })
+        .catch(function(error) { this.errors = error.response.data; });
     },
 
     deleteItem(item) {
-      axios.delete('api/items/'+item.id).then(response => {
+      axios.delete('/api/items/'+item.id).then(response => {
         let index = this.items.indexOf(item);
         this.items.splice(index, 1);
         console.log(response.data);
@@ -206,10 +206,9 @@ export default {
       var filtered = self.items.filter(function(item) {
         var searchRegex = new RegExp('^' + self.search, 'i');
         return (searchRegex.test(item.description) ||
-                searchRegex.test(item.code) ||
                 searchRegex.test(item.make) ||
                 searchRegex.test(item.group));
-      })
+      });
       return _.orderBy(filtered, this.sortKey, this.sortDir);
     }
   },

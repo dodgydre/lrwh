@@ -52,4 +52,11 @@ class ItemController extends Controller
         'message' => 'item deleted successfully',
       ]);
     }
+
+    public function messages()
+    {
+      return [
+          'quantity.numeric' => 'Quantity must be a number',
+      ];
+    }
 }
