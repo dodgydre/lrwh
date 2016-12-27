@@ -19,7 +19,7 @@ Route::get('/user', function (Request $request) {
 
 // Item resource routes.  Not currently set to be authenticated...
 Route::resource('items', 'ItemController');
-
+Route::get('/items/{searchKey}/{search}', 'ItemController@search');
 /*
 Route::get('items', function () {
   return App\Item::orderBy('code', 'desc')->get();
