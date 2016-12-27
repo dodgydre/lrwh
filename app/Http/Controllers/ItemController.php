@@ -19,6 +19,22 @@ class ItemController extends Controller
       ]);
     }
 
+    public function search($searchKey, $code) {
+      if($searchKey == 'all') {
+        $items = Item::where('code', 'like', '%' . $code . '%')
+          ->orWhere('code', 'like', '%' . $code . '%')
+          ->orWhere('description', 'like', '%' . $code . '%')
+          ->orWhere('colour', 'like', '%' . $code . '%')
+          ->orWhere('make', 'like', '%' . $code . '%')
+          ->orWhere('group', 'like', '%' . $code . '%')->get();
+      } else {
+        $items = Item::where($searchKey, 'like', '%' . $code . '%')->get();
+      }
+      return response()->json([
+        'items' => $items,
+      ]);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [

@@ -95,20 +95,12 @@ export default {
 
     cancelEdit() {
       this.edit = false;
-      this.editForm.shelf = '';
-      this.editForm.code = '';
-      this.editForm.description = '';
-      this.editForm.colour = '';
-      this.editForm.quantity = '';
-      this.editForm.make = '';
-      this.editForm.group = '';
     },
 
     updateItem(oldItem, newItem) {
       axios.patch('api/items/' + oldItem.id, newItem).then(response => {
-        this.$emit('update-item');
+        this.$emit('update-item', newItem);
         this.cancelEdit();
-        console.log(response.data);
       });
     },
 

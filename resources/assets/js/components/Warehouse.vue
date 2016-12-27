@@ -16,43 +16,43 @@
 
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="shelf" v-model="item.shelf" />
+                      <input class="input is-small" type="text" placeholder="shelf" v-model="item.shelf" />
                       <span class="help is-danger" v-for="error in errors.shelf">{{ error }}</span>
                     </p>
                   </td>
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="code" v-model="item.code" />
+                      <input class="input is-small" type="text" placeholder="code" v-model="item.code" />
                       <span class="help is-danger" v-for="error in errors.code">{{ error }}</span>
                     </p>
                   </td>
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="description" v-model="item.description" />
+                      <input class="input is-small" type="text" placeholder="description" v-model="item.description" />
                       <span class="help is-danger" v-for="error in errors.description">{{ error }}</span>
                     </p>
                   </td>
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="colour" v-model="item.colour" />
+                      <input class="input is-small" type="text" placeholder="colour" v-model="item.colour" />
                       <span class="help is-danger" v-for="error in errors.colour">{{ error }}</span>
                     </p>
                   </td>
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="quantity" v-model="item.quantity" />
+                      <input class="input is-small" type="text" placeholder="quantity" v-model="item.quantity" />
                       <span class="help is-danger" v-for="error in errors.quantity">{{ error }}</span>
                     </p>
                   </td>
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="make" v-model="item.make" />
+                      <input class="input is-small" type="text" placeholder="make" v-model="item.make" />
                       <span class="help is-danger" v-for="error in errors.make">{{ error }}</span>
                     </p>
                   </td>
                   <td>
                     <p class="control">
-                      <input class="input" type="text" placeholder="group" v-model="item.group" />
+                      <input class="input is-small" type="text" placeholder="group" v-model="item.group" />
                       <span class="help is-danger" v-for="error in errors.group">{{ error }}</span>
                     </p>
                   </td>
@@ -79,9 +79,49 @@
           <input class="input" type="text" v-model="search" />
           <i class="padded fa fa-search"></i>
         </p>
-
       </div>
       <div class="card-content">
+        <div class="content">
+          <div class="columns">
+            <div class="column">
+              <div class="control is-horizontal">
+                <p class="control-label">
+                  <label class="label">Search By</label>
+                </p>
+                <span class="select">
+                  <select name="apiSearchKey" v-model="apiSearchKey">
+                    <option v-for="option in apiSearchOptions">{{option}}</option>
+                  </select>
+                </span>
+              </div>
+            </div>
+            <div class="column">
+              <div class="control is-horizontal">
+                <p class="control-label">
+                  <label class="label">Search</label>
+                </p>
+                <p class="control is-horizontal">
+                  <input class="input" type="text" v-model="apiSearch" />
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <button
+                class="button is-primary"
+                @click="searchFetch"
+                v-bind:class="{ 'is-disabled': (apiSearchKey == '' && apiSearch == '') }"
+              >
+                Search
+              </button>
+            </div>
+            <div class="column">
+              <button class="button is-primary" @click="fetchAll">
+                Get All
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr />
         <table class="table is-striped is-bordered">
           <thead>
             <tr>
@@ -99,7 +139,7 @@
               v-for="item in sorted"
               v-bind:item="item"
               v-on:delete-item="deleteItem"
-              v-on:update-item="fetchItems"
+              v-on:update-item="updateTable"
               v-on:pull-item="pullItems"
             >
             </Items>
@@ -119,6 +159,12 @@ export default {
   data() {
     return {
       edit: false,
+      apiSearchOptions: [
+        'shelf', 'code', 'description', 'colour', 'make', 'group', 'all'
+      ],
+      apiSearchKey: '',
+      apiSearch: '',
+      apiSearched: false,
       sortKey: 'code',
       sortDir: 'asc',
       search: '',
@@ -140,15 +186,32 @@ export default {
   },
 
   created() {
-    this.fetchItems();
+    //this.fetchItems();
   },
 
   methods: {
-    fetchItems() {
-      axios.get('api/items')
+    fetchAll() {
+      this.items = [];
+      this.apiSearched = false;
+      axios.get('/api/items')
         .then(response => {
           this.items = response.data.items;
           for (let i = 0; i < this.items.length; i ++) {
+            this.items[i].quantity = Number(this.items[i].quantity);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+
+    searchFetch() {
+      this.items = [];
+      this.apiSearched = true;
+      axios.get('/api/items/' + this.apiSearchKey + '/' + this.apiSearch)
+        .then(response => {
+          this.items = response.data.items;
+          for (let i = 0; i < this.items.length; i++) {
             this.items[i].quantity = Number(this.items[i].quantity);
           }
         })
@@ -186,6 +249,20 @@ export default {
         this.toPull.splice(this.toPull.indexOf(code),1);
         console.log(this.toPull);
       }
+    },
+
+    updateTable(newItem) {
+      var index = -1;
+      for (var i = 0; i < this.items.length; i++) {
+        if (this.items[i].code == newItem.code) {
+          index = i;
+          break;
+        }
+      }
+      if(index > -1) {
+        this.items.splice(index,1);
+      }
+      this.items.push(newItem);
     },
 
     sortBy(column) {
