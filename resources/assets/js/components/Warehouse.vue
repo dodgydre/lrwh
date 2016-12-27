@@ -90,9 +90,10 @@
                 </p>
                 <span class="select">
                   <select name="apiSearchKey" v-model="apiSearchKey">
-                    <option v-for="option in apiSearchOptions">{{option}}</option>
-                  </select>
-                </span>
+                    <option v-for="option in apiSearchOptions">
+                      {{ option }}
+                    </option>
+                  </span>
               </div>
             </div>
             <div class="column">
@@ -135,15 +136,14 @@
             </tr>
           </thead>
           <tbody>
-            <Item
-              v-for="item in sorted"
-              v-bind:item="item"
-              v-on:delete-item="deleteItem"
-              v-on:update-item="updateTable"
-              v-on:pull-item="pullItems"
-            >
-            </Items>
-
+              <Item
+                v-for="item in sorted"
+                v-bind:item="item"
+                v-on:delete-item="deleteItem"
+                v-on:update-item="updateTable"
+                v-on:pull-item="pullItems"
+              >
+              </Items>
           </tbody>
         </table>
       </div>
