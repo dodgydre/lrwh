@@ -6,7 +6,7 @@
     </td>
     <td width="10%">
       <input type="text" class="input is-small" v-model="editForm.code" v-if="edit" />
-      <template v-else>{{ item.code }}</template>
+      <template v-else>{{ item.code }} </template>
     </td>
     <td width="25%">
       <input type="text" class="input is-small" v-model="editForm.description" v-if="edit" />
@@ -70,6 +70,7 @@ export default {
       pull: false,
       edit: false,
       editForm: {
+        id: '',
         shelf: '',
         code: '',
         description: '',
@@ -84,6 +85,7 @@ export default {
   methods: {
     editItem() {
       this.edit = true;
+      this.editForm.id = this.item.id;
       this.editForm.shelf = this.item.shelf;
       this.editForm.code = this.item.code;
       this.editForm.description = this.item.description;

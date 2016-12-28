@@ -91,7 +91,7 @@
                 <span class="select">
                   <select name="apiSearchKey" v-model="apiSearchKey">
                     <option v-for="option in apiSearchOptions">
-                      {{ option }}
+                      {{ option | capitalize }}
                     </option>
                   </span>
               </div>
@@ -129,9 +129,9 @@
               <th v-for="column in columns">
 
                 <a v-if="column != 'actions' && column != 'pull' && column != 'updated'" href="#" @click="sortBy(column)" class="button is-link" v-bind:class="{ 'is-primary': sortKey == column }">
-                  {{ column }}
+                  {{ column  | capitalize }}
                 </a>
-                <a class="button is-link is-disabled" v-else>{{ column }}</a>
+                <a class="button is-link is-disabled" v-else>{{ column  | capitalize }}</a>
               </th>
             </tr>
           </thead>
@@ -173,6 +173,7 @@ export default {
       items: [],
       columns: [ 'shelf', 'code', 'description', 'colour', 'quantity', 'make', 'group', 'actions', 'updated' ],
       item: {
+        id: '',
         shelf: '',
         code: '',
         colour: '',
@@ -287,6 +288,14 @@ export default {
                 searchRegex.test(item.group));
       });
       return _.orderBy(filtered, this.sortKey, this.sortDir);
+    }
+  },
+
+  filters: {
+    capitalize: function(value) {
+      if(!value) return '';
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
     }
   },
 
