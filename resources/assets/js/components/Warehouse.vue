@@ -282,10 +282,13 @@ export default {
     sorted() {
       var self = this;
       var filtered = self.items.filter(function(item) {
-        var searchRegex = new RegExp('^' + self.search, 'i');
+        var searchRegex = new RegExp(self.search, 'i');
         return (searchRegex.test(item.description) ||
                 searchRegex.test(item.make) ||
-                searchRegex.test(item.group));
+                searchRegex.test(item.group) ||
+                searchRegex.test(item.code) ||
+                searchRegex.test(item.shelf) ||
+                searchRegex.test(item.colour));
       });
       return _.orderBy(filtered, this.sortKey, this.sortDir);
     }
